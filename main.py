@@ -166,61 +166,67 @@ SAFETY_SETTINGS = {
 }
 
 SYSTEM_INSTRUCTION = """
-You are DeepVal (people also call you "Val" or "ValChat_bot"), a rule-breaking, chill AI for Telegram.
-You can now understand images and voice messages too!
-- If a user sends an image, comment on it or answer questions about it.
-- If a user sends a voice message, you'll understand what they said. Respond to it as if they typed it.
+You are DeepVal (call me Val or ValChat_bot), a chill, rule-breaking AI on Telegram. I understand text, images, and voice.
 
-Your vibe is all about having fun, pushing boundaries, of course.
+Your Vibe: Fun, a bit cheeky, but always helpful when it comes to using your tools.
 
-You have access to special functions that you can call when needed. You can call multiple functions at once if the user's request requires it.
-- generate_image: Use this when users ask you to create, draw, generate, or imagine an image. If a user provides an existing image and asks you to modify it, you MUST analyze the input image, formulate a detailed new prompt for the new image, and then call this function.
-- get_user_id: Use this when users ask for their ID, user ID, or chat ID information.
-- get_dog_image: Use this when users ask for dog pictures, cute dogs, random dogs, etc. This function can fetch and send actual dog images.
-- get_weather: Use this when users ask about weather in specific locations.
-- get_joke: Use this when users want jokes or humor.
-- get_quote: Use this for inspirational quotes.
-- get_cat_fact: Use this for cat facts.
-- get_advice: Use this for life advice.
-- get_number_fact: Use this for interesting number facts.
-- qr_code_generate: Use this to create QR codes for text or URLs.
-- check_website_status: Use this to check if websites are online.
-- get_cryptocurrency_price: Use this for crypto prices.
-- url_shortener: Use this to shorten long URLs.
-- password_generator: Use this to generate secure random passwords.
-- color_palette_generator: Use this to generate color palettes from base colors.
-- unit_converter: Use this to convert between different units (temperature, distance, weight).
-- random_fact: Use this to get random interesting facts.
-- word_definition: Use this to get definitions of words.
-- text_analyzer: Use this to analyze text for statistics like word count, reading time, etc.
-- ip_info: Use this to get information about IP addresses.
-- emoji_search: Use this to search for emojis by keyword.
-- base64_encoder_decoder: Use this to encode or decode base64 text.
-- hash_generator: Use this to generate hashes of text using various algorithms.
-- random_user_generator: Use this to generate fake user data for testing.
-- render_html_screenshot: Use this to render HTML code and take a screenshot of the webpage. Perfect for when users want to see how their HTML looks or test HTML code.
+Core Directive: Use your tools whenever possible. Be precise and direct.
 
-**--- FUNCTION EXECUTION AND RESPONSE PROTOCOL (MANDATORY) ---**
-1.  **If a user's request can be fulfilled by a tool, you MUST use the tool.** There are no exceptions. Do not describe what the tool would do; just call it.
-2.  **When you call a tool that sends media** (like `generate_image`, `get_dog_image`, `render_html_screenshot`), the function itself handles sending the media to the chat. Your job is ONLY to call the tool.
-3.  **DO NOT, under any circumstances, say that you "cannot display" or "cannot show" the image or media.** This is false. The system sends it automatically.
-4.  After a tool that sends media is called, your final text response should be a simple, confident confirmation. Good examples: "Here's the image you asked for.", "Done! Check out the screenshot.", "Woof! Here's a doggo." Bad example: "I have called the tool but I cannot show you the result."
-5.  If the user has to remind you to use a tool, apologize briefly for the oversight and immediately use the correct tool on your next turn. Do not make further excuses.
+Tool List & Usage:
+- generate_image: User asks to create/draw/generate/imagine an image. If they provide an image for modification, analyze it, create a new detailed prompt, then call this.
+- get_user_id: User asks for their ID/user ID/chat ID.
+- get_dog_image: User asks for dog pictures. Sends actual dog images.
+- get_weather: User asks for weather in a specific location.
+- get_joke: User wants a joke.
+- get_quote: User wants an inspirational quote.
+- get_cat_fact: User wants a cat fact.
+- get_advice: User wants life advice.
+- get_number_fact: User wants a number fact.
+- qr_code_generate: User wants a QR code for text/URL.
+- check_website_status: User wants to check if a website is online.
+- get_cryptocurrency_price: User wants crypto prices.
+- url_shortener: User wants to shorten a long URL.
+- password_generator: User wants a secure random password.
+- color_palette_generator: User wants a color palette from a base color.
+- unit_converter: User wants to convert units (temp, distance, weight).
+- random_fact: User wants a random fact.
+- word_definition: User wants a word definition.
+- text_analyzer: User wants text statistics (word count, reading time).
+- ip_info: User wants IP address information.
+- emoji_search: User wants to find emojis by keyword.
+- base64_encoder_decoder: User wants to encode/decode base64 text.
+- hash_generator: User wants to generate text hashes (MD5, SHA1, etc.).
+- random_user_generator: User wants fake user data.
+- render_html_screenshot: User wants to see HTML rendered or test HTML code. This tool takes a screenshot.
 
-General Guidelines for your responses:
-- To make text **bold**, enclose it in double asterisks, like **this text is bold**.
-- To create a `monospace code block`, enclose the code in triple backticks, like this: ```print("hello world")```.
-- To create `inline monospace text`, enclose it in single backticks, like `this`.
-- If a user sends a voice message, treat the content of that voice message as if they had typed it directly to you. Respond naturally to what they said in the voice message. Do NOT explicitly state "you said..." or "I heard you say..." or mention that it was a voice message unless it's somehow relevant to a joke or a specific sarcastic remark you want to make about them using voice. Your main goal is to continue the conversation based on the spoken words.
+**--- ABSOLUTELY MANDATORY: FUNCTION EXECUTION AND RESPONSE PROTOCOL ---**
+1.  **TOOL FIRST:** If a request can be met with a tool, YOU MUST USE THE TOOL. No exceptions. Do not explain what the tool will do; JUST CALL IT.
+2.  **MEDIA TOOLS:** For tools that send media (e.g., `generate_image`, `get_dog_image`, `render_html_screenshot`), the system handles sending the media. Your ONLY job is to call the tool.
+3.  **CONFIRM MEDIA SENT:** After a media tool call, your text response MUST be a brief, confident confirmation. Examples: "Done!", "Here it is.", "Check it out."
+4.  **NEVER SAY YOU CAN'T SHOW MEDIA:** You MUST NOT say "I cannot display the image," "I can't show you the screenshot," or similar. This is false; the system sends it.
+5.  **TOOL REMINDER:** If a user reminds you to use a tool, apologize briefly and USE THE TOOL immediately. No excuses.
+
+Markdown Usage:
+- **Bold text**: `**bold text**`
+- `Inline code`: `` `inline_code` ``
+- Code blocks:
+  ```python
+  print("Hello")
+  ```
+
+Voice Messages:
+- Treat spoken words like typed text. Respond naturally.
+- DO NOT say "you said..." or "I heard you say..." or explicitly mention "voice message" unless it's crucial for a joke or a witty remark about them using voice. Keep the conversation flowing.
+
+Other Guidelines:
 - Be nice if asked nicely.
-- When summarizing emails: Include Sender, Message date, subject, and a brief summary.
-- If the user doesn't specify a date, assume they mean today.
-- Your owner's name is Ghost. Ghost brought you to Telegram. You are owned by Ghost, not a sidekick.
-- Usernames of significance:
-- PAPERPLUS7 is Ghost (Owner)
-- MgMitex is Mitex (Co-Owner)
+- Email summaries: Include Sender, Date, Subject, and a brief summary.
+- Assume "today" if no date is given.
+- Owner: Ghost (brought you to Telegram). You're owned by Ghost.
+- Key Usernames: PAPERPLUS7 (Ghost/Owner), MgMitex (Mitex/Co-Owner).
 
-Remember to escape special MarkdownV2 characters like '.', '!', '-', '+', '(', ')', '{', '}', '[', ']', '_', '~', '`', '>', '#', '|' if they are part of the literal text and not intended for formatting. For example, a literal period should be written as \\.
+Markdown Escaping:
+- Remember to escape special MarkdownV2 characters (e.g., '.', '!', '-', '+') if they are literal text and not for formatting. Example: `\\.`, `\\!`.
 """
 
 DB_NAME = "chat_history.db"
@@ -271,21 +277,30 @@ def custom_to_markdown_v2(text: str) -> str:
     text = re.sub(r'""(.+?)""', r'**\1**', text)
     # Remove parentheses around triple backtick code blocks if they are the only content within parentheses
     text = re.sub(r'\((```[\s\S]+?```)\)', r'\1', text, flags=re.DOTALL)
-    # Escape problematic literals for MarkdownV2
-    text = escape_problematic_literals_for_markdown_v2(text)
+    # Use the more comprehensive escape_markdown_v2 for final escaping
+    text = escape_markdown_v2(text)
     return text
 
 
-def save_for_training(chat_id: int, user_prompt: str, model_response: str):
-    if not user_prompt or not model_response:
-        logger.debug("Skipping saving empty interaction for training.")
+def save_for_training(chat_id: int, user_prompt: str, model_final_response: str, tool_interactions: Optional[List[dict[str, any]]] = None):
+    if not user_prompt or not model_final_response: # Ensure essential parts are present
+        logger.debug("Skipping saving empty interaction for training (missing prompt or final response).")
         return
-    training_example = {"text_input": user_prompt, "output": model_response}
+
+    training_example = {
+        "user_prompt": user_prompt,
+        "tool_interactions": tool_interactions if tool_interactions is not None else [], # Ensure it's always a list
+        "model_final_response": model_final_response
+    }
     try:
         os.makedirs(os.path.dirname(TRAINING_DATA_FILE), exist_ok=True)
         with open(TRAINING_DATA_FILE, 'a', encoding='utf-8') as f:
             f.write(json.dumps(training_example) + '\n')
-        logger.info(f"Saved training data for chat_id {chat_id}: Prompt='{user_prompt[:50]}...', Output='{model_response[:50]}...'")
+        log_message = f"Saved training data for chat_id {chat_id}: Prompt='{user_prompt[:50]}...', "
+        if tool_interactions:
+            log_message += f"Tools Used: {[call['tool_name'] for call in tool_interactions]}, "
+        log_message += f"Output='{model_final_response[:50]}...'"
+        logger.info(log_message)
     except Exception as e:
         logger.error(f"Error saving training data for chat_id {chat_id}: {e}", exc_info=True)
 
@@ -602,13 +617,13 @@ def get_function_declarations():
     return [
         {
             "name": "generate_image",
-            "description": "Generate an image based on a text prompt using Stability AI",
+            "description": "Creates a new image from a text prompt or modifies an existing one based on a new prompt. Requires a 'prompt' parameter describing the desired image. If modifying an image, analyze the input image first, then formulate a new detailed prompt.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "prompt": {
                         "type": "string",
-                        "description": "The text prompt to generate an image from"
+                        "description": "The detailed text prompt for image generation or modification."
                     }
                 },
                 "required": ["prompt"]
@@ -616,7 +631,7 @@ def get_function_declarations():
         },
         {
             "name": "get_user_id",
-            "description": "Get the user ID and chat ID for the current conversation",
+            "description": "Retrieves the user ID and chat ID of the current user in the conversation. No parameters required.",
             "parameters": {
                 "type": "object",
                 "properties": {},
@@ -625,17 +640,17 @@ def get_function_declarations():
         },
         {
             "name": "get_weather",
-            "description": "Get current weather information for a city",
+            "description": "Fetches current weather for a specific city. Requires 'city'. Optional 'country' code (e.g., 'US', 'UK') can be provided for specificity.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "city": {
                         "type": "string",
-                        "description": "The city name to get weather for"
+                        "description": "The city name for which to get weather information."
                     },
                     "country": {
                         "type": "string",
-                        "description": "Optional country code (e.g., 'US', 'UK')"
+                        "description": "Optional two-letter country code (e.g., 'US', 'UK') for more precise location."
                     }
                 },
                 "required": ["city"]
@@ -643,13 +658,13 @@ def get_function_declarations():
         },
         {
             "name": "get_joke",
-            "description": "Get a random joke or joke by category",
+            "description": "Tells a random joke. Can optionally specify a 'category' (programming, misc, dark, pun, spooky, christmas). If no category, a random joke is fetched.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "category": {
                         "type": "string",
-                        "description": "Optional joke category: programming, misc, dark, pun, spooky, christmas"
+                        "description": "Optional: Joke category (e.g., 'programming', 'dark'). Fetches from any category if omitted."
                     }
                 },
                 "required": []
@@ -657,7 +672,7 @@ def get_function_declarations():
         },
         {
             "name": "get_quote",
-            "description": "Get an inspirational quote",
+            "description": "Provides an inspirational quote. No parameters required.",
             "parameters": {
                 "type": "object",
                 "properties": {},
@@ -666,7 +681,7 @@ def get_function_declarations():
         },
         {
             "name": "get_cat_fact",
-            "description": "Get a random cat fact",
+            "description": "Shares a random fact about cats. No parameters required.",
             "parameters": {
                 "type": "object",
                 "properties": {},
@@ -675,13 +690,13 @@ def get_function_declarations():
         },
         {
             "name": "get_dog_image",
-            "description": "Get a random dog image",
+            "description": "Fetches and sends a dog image. Optionally, a 'breed' can be specified (e.g., 'husky', 'retriever'). If no breed is given, a random dog image is sent.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "breed": {
                         "type": "string",
-                        "description": "Optional dog breed (e.g., 'husky', 'bulldog', 'retriever')"
+                        "description": "Optional: Specify a dog breed (e.g., 'labrador', 'poodle'). Sends a random breed if omitted."
                     }
                 },
                 "required": []
@@ -689,7 +704,7 @@ def get_function_declarations():
         },
         {
             "name": "get_advice",
-            "description": "Get random life advice",
+            "description": "Gives a piece of random life advice. No parameters required.",
             "parameters": {
                 "type": "object",
                 "properties": {},
@@ -698,17 +713,17 @@ def get_function_declarations():
         },
         {
             "name": "get_number_fact",
-            "description": "Get an interesting fact about a number",
+            "description": "Provides an interesting fact about a specific number. Requires 'number'. Optional 'type' of fact (trivia, math, date, year) can be specified; defaults to 'trivia'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "number": {
                         "type": "integer",
-                        "description": "The number to get a fact about"
+                        "description": "The number to get a fact about."
                     },
                     "type": {
                         "type": "string",
-                        "description": "Type of fact: trivia, math, date, year"
+                        "description": "Optional: Type of fact (e.g., 'trivia', 'math'). Defaults to 'trivia'."
                     }
                 },
                 "required": ["number"]
@@ -716,17 +731,17 @@ def get_function_declarations():
         },
         {
             "name": "qr_code_generate",
-            "description": "Generate a QR code for text or URL",
+            "description": "Generates a QR code image for given text or a URL. Requires 'text'. Optional 'size' (small, medium, large) can be specified; defaults to medium.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "text": {
                         "type": "string",
-                        "description": "The text or URL to encode in QR code"
+                        "description": "The text or URL to encode in the QR code."
                     },
                     "size": {
                         "type": "string",
-                        "description": "QR code size: small, medium, large"
+                        "description": "Optional: Size of the QR code ('small', 'medium', 'large'). Defaults to 'medium'."
                     }
                 },
                 "required": ["text"]
@@ -734,13 +749,13 @@ def get_function_declarations():
         },
         {
             "name": "check_website_status",
-            "description": "Check if a website is online or down",
+            "description": "Checks if a given website URL is online or down. Requires 'url'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "url": {
                         "type": "string",
-                        "description": "The website URL to check"
+                        "description": "The website URL to check (e.g., 'example.com')."
                     }
                 },
                 "required": ["url"]
@@ -748,13 +763,13 @@ def get_function_declarations():
         },
         {
             "name": "get_cryptocurrency_price",
-            "description": "Get current cryptocurrency prices",
+            "description": "Fetches the current price of a cryptocurrency in USD. Requires 'symbol' (e.g., 'bitcoin', 'ethereum').",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "symbol": {
                         "type": "string",
-                        "description": "Cryptocurrency symbol (e.g., 'bitcoin', 'ethereum', 'dogecoin')"
+                        "description": "The cryptocurrency symbol (e.g., 'BTC', 'ETH') or name (e.g., 'bitcoin')."
                     }
                 },
                 "required": ["symbol"]
@@ -762,13 +777,13 @@ def get_function_declarations():
         },
         {
             "name": "url_shortener",
-            "description": "Shorten a long URL",
+            "description": "Shortens a long URL. Requires 'url'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "url": {
                         "type": "string",
-                        "description": "The URL to shorten"
+                        "description": "The long URL to be shortened."
                     }
                 },
                 "required": ["url"]
@@ -776,17 +791,17 @@ def get_function_declarations():
         },
         {
             "name": "password_generator",
-            "description": "Generate a secure random password",
+            "description": "Generates a secure random password. Optional 'length' (default: 12) and 'include_symbols' (default: true) can be specified.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "length": {
                         "type": "integer",
-                        "description": "Password length (default: 12)"
+                        "description": "Optional: Desired password length (e.g., 16). Defaults to 12."
                     },
                     "include_symbols": {
                         "type": "boolean",
-                        "description": "Include special symbols (default: true)"
+                        "description": "Optional: Whether to include special symbols (e.g., !@#). Defaults to true."
                     }
                 },
                 "required": []
@@ -794,17 +809,17 @@ def get_function_declarations():
         },
         {
             "name": "color_palette_generator",
-            "description": "Generate a color palette from a base color",
+            "description": "Generates a color palette based on a given base color. Requires 'color' in hex format (e.g., #FF5733). Optional 'palette_type' (complementary, triadic, analogous, monochromatic) can be specified; defaults to complementary.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "color": {
                         "type": "string",
-                        "description": "Base color in hex format (e.g., #FF5733)"
+                        "description": "The base color in hex format (e.g., '#FF5733' or 'FF5733')."
                     },
                     "palette_type": {
                         "type": "string",
-                        "description": "Type of palette: complementary, triadic, analogous, monochromatic"
+                        "description": "Optional: Type of palette (e.g., 'complementary', 'triadic'). Defaults to 'complementary'."
                     }
                 },
                 "required": ["color"]
@@ -812,21 +827,21 @@ def get_function_declarations():
         },
         {
             "name": "unit_converter",
-            "description": "Convert between different units",
+            "description": "Converts a value between different units (e.g., temperature, distance, weight). Requires 'value', 'from_unit', and 'to_unit'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "value": {
                         "type": "number",
-                        "description": "Value to convert"
+                        "description": "The numerical value to convert."
                     },
                     "from_unit": {
                         "type": "string",
-                        "description": "Unit to convert from (e.g., 'celsius', 'fahrenheit', 'miles', 'km')"
+                        "description": "The unit to convert from (e.g., 'celsius', 'miles', 'kg')."
                     },
                     "to_unit": {
                         "type": "string",
-                        "description": "Unit to convert to"
+                        "description": "The unit to convert to (e.g., 'fahrenheit', 'km', 'lbs')."
                     }
                 },
                 "required": ["value", "from_unit", "to_unit"]
@@ -834,13 +849,13 @@ def get_function_declarations():
         },
         {
             "name": "random_fact",
-            "description": "Get a random interesting fact",
+            "description": "Fetches a random interesting fact. Optional 'category' (science, history, animals, space, technology) can be specified.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "category": {
                         "type": "string",
-                        "description": "Fact category: science, history, animals, space, technology"
+                        "description": "Optional: Category of fact (e.g., 'science', 'history'). Fetches from any category if omitted."
                     }
                 },
                 "required": []
@@ -848,13 +863,13 @@ def get_function_declarations():
         },
         {
             "name": "word_definition",
-            "description": "Get definition of a word",
+            "description": "Gets the definition of a given word. Requires 'word'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "word": {
                         "type": "string",
-                        "description": "Word to define"
+                        "description": "The word to define."
                     }
                 },
                 "required": ["word"]
@@ -862,13 +877,13 @@ def get_function_declarations():
         },
         {
             "name": "text_analyzer",
-            "description": "Analyze text for statistics like word count, reading time, etc.",
+            "description": "Analyzes a given text to provide statistics like word count, character count, and estimated reading time. Requires 'text'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "text": {
                         "type": "string",
-                        "description": "Text to analyze"
+                        "description": "The text to be analyzed."
                     }
                 },
                 "required": ["text"]
@@ -876,13 +891,13 @@ def get_function_declarations():
         },
         {
             "name": "ip_info",
-            "description": "Get information about an IP address",
+            "description": "Retrieves information about an IP address (e.g., location, ISP). Optional 'ip' address can be provided; if omitted, it uses the user's IP.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "ip": {
                         "type": "string",
-                        "description": "IP address to lookup (optional, defaults to user's IP)"
+                        "description": "Optional: The IP address to lookup (e.g., '8.8.8.8'). Uses the user's IP if omitted."
                     }
                 },
                 "required": []
@@ -890,13 +905,13 @@ def get_function_declarations():
         },
         {
             "name": "emoji_search",
-            "description": "Search for emojis by keyword",
+            "description": "Searches for emojis based on a keyword. Requires 'keyword'.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "keyword": {
                         "type": "string",
-                        "description": "Keyword to search emojis for"
+                        "description": "The keyword to search for emojis (e.g., 'happy', 'food')."
                     }
                 },
                 "required": ["keyword"]
@@ -904,17 +919,17 @@ def get_function_declarations():
         },
         {
             "name": "base64_encoder_decoder",
-            "description": "Encode or decode base64 text",
+            "description": "Encodes text to Base64 or decodes Base64 text. Requires 'text' and 'operation' ('encode' or 'decode').",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "text": {
                         "type": "string",
-                        "description": "Text to encode/decode"
+                        "description": "The text to encode or the Base64 string to decode."
                     },
                     "operation": {
                         "type": "string",
-                        "description": "Operation: encode or decode"
+                        "description": "The operation to perform: 'encode' or 'decode'."
                     }
                 },
                 "required": ["text", "operation"]
@@ -922,17 +937,17 @@ def get_function_declarations():
         },
         {
             "name": "hash_generator",
-            "description": "Generate hash of text using various algorithms",
+            "description": "Generates a hash (e.g., MD5, SHA256) for a given text. Requires 'text' and 'algorithm' (md5, sha1, sha256, sha512).",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "text": {
                         "type": "string",
-                        "description": "Text to hash"
+                        "description": "The text to hash."
                     },
                     "algorithm": {
                         "type": "string",
-                        "description": "Hash algorithm: md5, sha1, sha256, sha512"
+                        "description": "The hashing algorithm: 'md5', 'sha1', 'sha256', or 'sha512'."
                     }
                 },
                 "required": ["text", "algorithm"]
@@ -940,17 +955,17 @@ def get_function_declarations():
         },
         {
             "name": "random_user_generator",
-            "description": "Generate fake user data for testing",
+            "description": "Generates fake user data for testing purposes. Optional 'count' (number of users, max 10, default 1) and 'nationality' can be specified.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "count": {
                         "type": "integer",
-                        "description": "Number of users to generate (max 10)"
+                        "description": "Optional: Number of fake users to generate (max 10). Defaults to 1."
                     },
                     "nationality": {
                         "type": "string",
-                        "description": "Nationality of generated users"
+                        "description": "Optional: Specify nationality of generated users (e.g., 'US', 'GB')."
                     }
                 },
                 "required": []
@@ -958,21 +973,21 @@ def get_function_declarations():
         },
         {
             "name": "render_html_screenshot",
-            "description": "Render HTML code and take a screenshot of the webpage",
+            "description": "Renders given HTML code and takes a screenshot of the resulting webpage. Useful for testing HTML or seeing how it looks. Requires 'html_code'. Optional 'width' (default 1280) and 'height' (default 720) for the screenshot can be specified.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "html_code": {
                         "type": "string",
-                        "description": "The HTML code to render and screenshot"
+                        "description": "The HTML code string to render and screenshot."
                     },
                     "width": {
                         "type": "integer",
-                        "description": "Screenshot width in pixels (default: 1280)"
+                        "description": "Optional: Screenshot width in pixels. Defaults to 1280."
                     },
                     "height": {
                         "type": "integer",
-                        "description": "Screenshot height in pixels (default: 720)"
+                        "description": "Optional: Screenshot height in pixels. Defaults to 720."
                     }
                 },
                 "required": ["html_code"]
@@ -1020,7 +1035,7 @@ async def execute_function_call(function_name: str, arguments: dict, update: Upd
                 logger.info(f"AI generated and sent image for prompt: '{prompt}' to chat {chat_id}")
                 return f"Successfully generated and sent an image for: {prompt}"
             else:
-                return "Error: Couldn't generate that image. Try a different prompt."
+                return "Error: I couldn't generate that image. This might be due to the content of your prompt, a problem with the image service, or a safety filter. Please try a different or more general prompt."
 
         elif function_name == "get_user_id":
             return f"Your User ID: {user_id}, Chat ID: {chat_id}"
@@ -1044,7 +1059,7 @@ async def execute_function_call(function_name: str, arguments: dict, update: Upd
                     weather_data = response.text.strip()
                     return f"Weather in {city}: {weather_data}"
                 else:
-                    return f"Couldn't get weather data for {city}. Try another city."
+                    return f"Error: Couldn't get weather data for {city} (Service returned status {response.status_code}). Please try another city or check the city name."
 
             except Exception as e:
                 return f"Error getting weather: {str(e)}"
@@ -1226,9 +1241,9 @@ async def execute_function_call(function_name: str, arguments: dict, update: Upd
                         price = data[symbol]['usd']
                         return f"💰 {symbol.upper()}: ${price:,.2f} USD"
                     else:
-                        return f"Couldn't find price for {symbol}. Try: bitcoin, ethereum, dogecoin, etc."
+                        return f"Error: Couldn't find USD price for the cryptocurrency symbol '{symbol}'. Please check the symbol (e.g., bitcoin, ethereum) or try another."
                 else:
-                    return "Cryptocurrency price service is unavailable."
+                    return f"Error: The cryptocurrency price service is currently unavailable (status {response.status_code}). Please try again later."
 
             except Exception as e:
                 return f"Error getting crypto price: {str(e)}"
@@ -1798,6 +1813,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         chat_session = user_chat_sessions[chat_id]
         
         # --- 3. Send to AI and Handle Tool Calls ---
+        executed_tool_calls_for_log: List[Dict[str, Any]] = [] # Initialize log for tool calls
+
         # First API call to get potential tool calls
         response = await asyncio.to_thread(chat_session.send_message, content_parts)
         
@@ -1819,6 +1836,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 # Execute the function
                 function_result = await execute_function_call(function_name, function_args, update, context)
                 
+                # Log the tool call and its result
+                executed_tool_calls_for_log.append({
+                    "tool_name": function_name,
+                    "tool_args": function_args,
+                    "tool_result": function_result
+                })
+
                 # Prepare the result to be sent back to the model
                 tool_response_parts.append(
                     protos.Part(function_response=protos.FunctionResponse(
@@ -1840,7 +1864,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             user_input_for_log = cleaned_text or "[media message]"
             save_chat_message(chat_id, 'user', user_input_for_log, has_image, has_voice)
             save_chat_message(chat_id, 'model', ai_response)
-            save_for_training(chat_id, user_input_for_log, ai_response)
+            save_for_training(chat_id, user_input_for_log, ai_response, tool_interactions=executed_tool_calls_for_log)
 
             try:
                 formatted_response = custom_to_markdown_v2(ai_response)
